@@ -1,0 +1,80 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: goserver
+  labels:
+    app: goserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: goserver
+      version: v1
+  template:
+    metadata:
+      labels:
+        name: goserver
+        app: goserver
+        version: v1
+    spec:
+      containers:
+        - name: goserver
+          image: "cauanb/hello-go:v11"
+          # Begin Reservar o mínimo (Auto Scaling)
+          resources:
+            requests:
+              cpu: "0.3"
+              memory: 20Mi
+            limits:
+              cpu: "0.3"
+              memory: 25Mi
+          # End Reservar o mínimo
+          # Begin Health check with startupProbe
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: 8000
+            periodSeconds: 3
+            failureThreshold: 30
+          # End Health check with readinessProbe
+          # Begin Health check with readinessProbe
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8000
+            periodSeconds: 3
+            failureThreshold: 1
+          # End Health check with readinessProbe
+          # Begin Health check with livenessProbe
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8000
+            periodSeconds: 5
+            failureThreshold: 3
+            timeoutSeconds: 1
+            successThreshold: 1
+          # End Health check
+          # Begin EnvFrom Use Env with kind Secret and configMap
+          envFrom:
+            - configMapRef:
+                name: goserver-env
+            - secretRef:
+                name: goserver-secret
+          # End EnvFrom
+          # Begin volumeMounts
+          # Monta o volume no path dentro do container
+          # e utiliza o volume config (family.tx) para ser criado no path moutPath
+          volumeMounts:
+            - mountPath: "/go/myfamily"
+              name: config
+              readOnly: true
+      # Begin volume
+      volumes:
+        - name: config
+          configMap:
+            name: configmap-family
+            items:
+              - key: members
+                path: "family.txt"
+      # End volume
