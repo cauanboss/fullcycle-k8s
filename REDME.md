@@ -58,6 +58,23 @@ A opção resource você define o minimo para rodar um pod e o máximo
 # Usando HPA HorizontalPodAutoscaler
 Este tipo (Kind) no Kubernetes serve para fazer o auto scaling
 
-# ferramenta para testar performace e fazer o HPA funcionar (fortio, k6)
+# Ferramenta para testar performace e fazer o HPA funcionar (fortio, k6)
 Nome da ferrarmenta é a fortio e o comando usado é:
 kubectl run -it fortio --rm --image=istio/fortio -- load -t 120m -qps 800 http://goserver-service/healthz
+
+# Volume perssistente usando PersistentVolumeClaim
+Caso precise salvar dados persistentes pode-se criar um volume persistente usando a
+configuração do k8s que é o Kind PersistentVolumeClaim 
+-- Ler sobre as opções do accessModes
+kubectl get storageclass
+
+# Como fazer o bind do volume criado ?
+Dentro do deployment na marte de volumes é adicionado o vinculo com o PersistentVolumeClaim 
+Depois adicionar em volumeMounts dentro do deployment
+
+# Stateless & Stateful
+Stateless não salva histórico para uma possivel re-analise do processo, e caso de um erro na chamada do quer que seja, tera que re-executa-lo.
+Stateful salva históprico e pode re-analisar os processos.
+
+# Usando StatefulSet
+Quando utiliza o StatefulSet no Kind do k8s ele consegue ordenar uma criação caso precise que o primeiro seja o master e o restante se comuniquem. E quando diminui replicas ele diminui do fim para o primeiro
