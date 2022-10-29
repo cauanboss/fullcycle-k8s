@@ -1,0 +1,21 @@
+#PARA ESTE TESTE FUNCIONAR É PRECISO ESTAR DENTRO DE UM CLUSTER NUMA NUVEM
+apiVersion: networking.k8s.io/b1beta1
+kind: Ingress
+metadata:
+  name: ingress-host
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+  labels:
+    name: ingress-host
+spec:
+  rules:
+  - host: "ingress.fullcycle.com.br"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: goserver-service
+            port: 
+              number: 80

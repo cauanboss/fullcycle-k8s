@@ -5,10 +5,11 @@ metadata:
   labels:
     app: mysql
 spec:
-  replicas: 3
+  replicas: 4
   selector:
     matchLabels:
       app: mysql
+  # o serviceName faz o vinculo com o kind service
   serviceName: mysql-h
   podManagementPolicy: Parallel
   template:
@@ -22,3 +23,16 @@ spec:
         env:
           - name: MYSQL_ROOT_PASSWORD
             value: root
+        volumeMounts:
+          - mountPath: /var/lib/mysql
+            name: mysql-volume
+
+  volumeClaimTemplates:
+    - metadata:
+        name: mysql-volume
+      spec:
+        accessModes:
+          - ReadWriteOnce 
+        resources:
+          requests:
+            storage: 5Gi

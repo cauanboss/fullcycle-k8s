@@ -78,3 +78,20 @@ Stateful salva históprico e pode re-analisar os processos.
 
 # Usando StatefulSet
 Quando utiliza o StatefulSet no Kind do k8s ele consegue ordenar uma criação caso precise que o primeiro seja o master e o restante se comuniquem. E quando diminui replicas ele diminui do fim para o primeiro
+
+# Hadlher server
+Força replicas não possuirem ip e aponta dns para um principal
+
+# Criando Hadler service
+Para isso é preciso criar um Kind Service com o name do service fazendo o vinculo com o serviceName no StateFullSet e 
+No service uma opção bem importante é usar a opção "clusterIP: None"
+
+# Criando voluime no StateFullSet
+Teremos que criar o volumeClaimTemplates e o volumeMounts lado a lado com os envs dentro do spec
+
+# Banco de dados no K8S não recomenda
+
+# INGRESS 
+Para funcionar o ingress é preciso estar num cluster numa nuvem
+
+# Cert-manager
