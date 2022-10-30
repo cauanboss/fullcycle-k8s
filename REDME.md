@@ -95,3 +95,18 @@ Teremos que criar o volumeClaimTemplates e o volumeMounts lado a lado com os env
 Para funcionar o ingress é preciso estar num cluster numa nuvem
 
 # Cert-manager
+Para isso temos que utilizar o Kind do tipo kind: ClusterIssuer
+Após a configuração yaml é preciso adicionar as notations que esta utilizando o cert-manager e force-tls=true
+
+# Working with namespace
+kubectl create ns prod 
+e o namespace é adicionado aos metadatas dos configs
+
+# Working Context
+O contexto serve para separar toda a aplicação dev e prod dentro de um mesmo cluster
+kubectl config set-context dev --namespace=dev --cluster=kind-fullcycle
+Ver as configurações do cluster
+kubectl config view
+kubectl config use-context dev
+kubectl config current-contex
+
