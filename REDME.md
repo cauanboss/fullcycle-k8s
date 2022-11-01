@@ -110,3 +110,7 @@ kubectl config view
 kubectl config use-context dev
 kubectl config current-contex
 
+# Security com ServiceAccount
+Para isso é preciso usar o Kind ServiceAccount adicionar as opções de name
+Depois disso é preciso colocar as regras usando o Kind do tipo Role e juntar as regras com o ServiceAccount usando o Kind do tipo ClusterRoleBinding
+E depois adicionar o name do ServiceAccount no deployment/pods para proteger os serviços

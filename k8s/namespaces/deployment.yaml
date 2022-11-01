@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: server
-  namespace: dev
 spec:
   selector:
     matchLabels:
@@ -12,12 +11,11 @@ spec:
       labels:
         app: server
     spec:
+      serviceAccount: server    
       containers:
       - name: server
-        image: "cauanb/hello-go"
+        image: "cauanb/hello-go:v11"
         resources:
           limits:
             memory: "128Mi"
-            cpu: "500m"
-        ports:
-        - containerPort: 8000
+            cpu: "500m"       
