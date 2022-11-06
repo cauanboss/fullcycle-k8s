@@ -97,6 +97,8 @@ Para funcionar o ingress é preciso estar num cluster numa nuvem
 # Cert-manager
 Para isso temos que utilizar o Kind do tipo kind: ClusterIssuer
 Após a configuração yaml é preciso adicionar as notations que esta utilizando o cert-manager e force-tls=true
+https://cert-manager.io/docs/installation/
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.10.0/cert-manager.yaml
 
 # Working with namespace
 kubectl create ns prod 
